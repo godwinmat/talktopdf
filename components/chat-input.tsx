@@ -26,15 +26,13 @@ const ChatInput = ({ threadId }: ChatInputProps) => {
             setLoading(true);
             event.preventDefault();
             setMessage("");
-            let response = await fetch(`/api/thread/${threadId}/messages`, {
+            await fetch(`/api/thread/${threadId}/messages`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(message),
             });
-            response = await response.json();
-            console.log(response);
 
             router.refresh();
         } catch (error) {

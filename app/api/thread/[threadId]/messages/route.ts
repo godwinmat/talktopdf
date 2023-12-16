@@ -1,4 +1,4 @@
-import { getAllMessagesAndAddToDB } from "@/app/api/__utils";
+import { AddAllCurrentMessagesToDB } from "@/app/api/__utils";
 import db from "@/lib/db";
 import { openai } from "@/lib/openai";
 import { auth } from "@clerk/nextjs";
@@ -19,11 +19,6 @@ export async function GET(
         const { data } = await openai.beta.threads.messages.list(
             params.threadId
         );
-
-        let { data: runData } = await openai.beta.threads.runs.list(
-            params?.threadId
-        );
-        console.log(runData);
 
         if (!data) {
             return new NextResponse("Not Found", { status: 404 });
@@ -93,9 +88,41 @@ export async function POST(
                 throw new Error("Run status failed or cancelled");
             }
         }
+        await AddAllCurrentMessagesToDB(threadId, message);
+
         return NextResponse.json({ data: "Message sent" });
     } catch (error) {
         console.log("[SEND_MESSAGE_ERROR]", error);
+        return new NextResponse("Internal Error", { status: 500 });
+    }
+}
+
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: { threadId: string } }
+) {
+    try {
+        const { userId } = auth();
+
+        if (!userId) return new NextResponse("Unauthorised", { status: 401 });
+
+        const thread = await db.thread.findUnique({
+            where: {
+                id: params?.threadId,
+            },
+        });
+
+        if (!thread) return new NextResponse("Not Found", { status: 404 });
+
+        await db.message.deleteMany({
+            where: {
+                threadId: params?.threadId,
+            },
+        });
+
+        return NextResponse.json("Deleted");
+    } catch (error) {
+        console.log("[CLEAR_MESSAGES_ERROR]", error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }

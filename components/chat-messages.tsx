@@ -1,33 +1,35 @@
-"use client";
-
-import { ThreadMessage } from "openai/resources/beta/threads/messages/messages.mjs";
-import { useEffect, useState } from "react";
-import ChatBubble from "./chat-bubble";
+import db from "@/lib/db";
 import Image from "next/image";
+import ChatBubble from "./chat-bubble";
 
 interface ChatMessagesProps {
     threadId: string;
 }
 
-const ChatMessages = ({ threadId }: ChatMessagesProps) => {
-    const [messages, setMessages] = useState<ThreadMessage[]>([]);
+const ChatMessages = async ({ threadId }: ChatMessagesProps) => {
+    const messages = await db.message.findMany({
+        where: {
+            threadId,
+        },
+    });
+    // const [messages, setMessages] = useState<ThreadMessage[]>([]);
 
-    async function getMessages(threadId: string) {
-        try {
-            let res = await fetch(`/api/thread/${threadId}/messages`, {
-                method: "GET",
-            });
-            const data = await res.json();
-            console.log(data.messages.length);
-            setMessages(data.messages.reverse());
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // async function getMessages(threadId: string) {
+    //     try {
+    //         let res = await fetch(`/api/thread/${threadId}/messages`, {
+    //             method: "GET",
+    //         });
+    //         const data = await res.json();
+    //         console.log(data.messages.length);
+    //         setMessages(data.messages.reverse());
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
-    useEffect(() => {
-        getMessages(threadId);
-    }, []);
+    // useEffect(() => {
+    //     getMessages(threadId);
+    // }, []);
 
     return (
         <div className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll">

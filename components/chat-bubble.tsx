@@ -1,16 +1,11 @@
 import { cn } from "@/lib/utils";
-import {
-    MessageContentText,
-    ThreadMessage,
-} from "openai/resources/beta/threads/messages/messages.mjs";
+import { Message } from "@prisma/client";
 
 interface ChatBubbleProps {
-    message: ThreadMessage;
+    message: Message;
 }
 
 const ChatBubble = ({ message }: ChatBubbleProps) => {
-    if (message.content[0].type === "image_file") return null;
-
     return (
         <div
             className={cn(
@@ -18,7 +13,7 @@ const ChatBubble = ({ message }: ChatBubbleProps) => {
                 message.role === "user" && "ml-auto"
             )}
         >
-            <p className="text-sm">{message.content[0]?.text.value}</p>
+            <p className="text-sm">{message.content}</p>
             <p className="text-xs pt-1">12:02 PM</p>
         </div>
     );

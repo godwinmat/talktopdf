@@ -37,7 +37,7 @@ const UploadModal = () => {
             const formData = new FormData();
             formData.append("file", file);
 
-            const res = await fetch("/api/upload-pdf", {
+            const res = await fetch("/api/thread", {
                 method: "POST",
                 body: formData,
             });

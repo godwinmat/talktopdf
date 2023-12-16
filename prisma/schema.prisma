@@ -29,4 +29,6 @@ model Message {
   thread   Thread? @relation(fields: [threadId], references: [id], onDelete: Cascade)
   threadId String
   role     Roles
+
+  createdAt DateTime
 }
