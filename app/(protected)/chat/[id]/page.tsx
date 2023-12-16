@@ -1,6 +1,6 @@
 import ChatInput from "@/components/chat-input";
 import ChatMessages from "@/components/chat-messages";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface ChatIdProps {
@@ -20,9 +20,9 @@ const Chat = async ({ params }: ChatIdProps) => {
         redirect("/chat");
     }
     return (
-        <div>
-            <ChatMessages />
-            <ChatInput />
+        <div className="w-full h-full flex flex-col">
+            <ChatMessages threadId={params?.id} />
+            <ChatInput threadId={params?.id} />
         </div>
     );
 };

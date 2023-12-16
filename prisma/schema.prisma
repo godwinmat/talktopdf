@@ -15,4 +15,18 @@ model Thread {
   userId    String
   fileId    String     @unique
   fileName  String     
+  messages  Message[]
+}
+
+enum Roles {
+  user
+  assistant
+}
+
+model Message {
+  id        String    @id @default(uuid())  @map("_id")
+  content   String
+  thread   Thread? @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  threadId String
+  role     Roles
 }

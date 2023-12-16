@@ -1,7 +1,11 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { openai } from "@/lib/openai";
 import { auth } from "@clerk/nextjs";
 import { NextResponse, NextRequest } from "next/server";
+import { ThreadMessage } from "openai/resources/beta/threads/messages/messages.mjs";
+import { getAllMessagesAndAddToDB } from "../__utils";
+
+const firstPrompt = "Give me a short overview of the file";
 
 export async function POST(request: NextRequest) {
     try {
@@ -31,7 +35,7 @@ export async function POST(request: NextRequest) {
                 messages: [
                     {
                         role: "user",
-                        content: "Give me a short overview of the file",
+                        content: firstPrompt,
                         file_ids: [uploadedFile.id],
                     },
                 ],
@@ -48,7 +52,7 @@ export async function POST(request: NextRequest) {
                 runStatus.status === "failed" ||
                 runStatus.status === "cancelled"
             ) {
-                break;
+                throw new Error("Run status failed or cancelled");
             }
         }
 
@@ -61,11 +65,19 @@ export async function POST(request: NextRequest) {
             },
         });
 
+        const messages = await getAllMessagesAndAddToDB(thread.id, firstPrompt);
+
+        for (const message of messages) {
+            await db.message.create({
+                data: message,
+            });
+        }
+
         return NextResponse.json({
             thread,
         });
     } catch (error) {
-        console.log("[UPLOAD PDF]", error);
+        console.log("[UPLOAD_PDF_ERROR]", error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
