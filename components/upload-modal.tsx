@@ -31,7 +31,7 @@ const UploadModal = () => {
     const uploadModal = useUploadModal();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const isDesktop = useMediaQuery("(min-width: 768px)");
+    const isDesktop = useMediaQuery("(min-width: 640px)");
 
     const handleFileUpload = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -79,60 +79,15 @@ const UploadModal = () => {
                 <DialogContent className="rounded-lg">
                     <DialogHeader>
                         <DialogTitle>Upload PDF</DialogTitle>
+                        <DialogDescription className="text-center sm:text-left">
+                            {loading
+                                ? "Uploading..."
+                                : "Upload PDF to Chat With"}
+                        </DialogDescription>
                     </DialogHeader>
 
-                    <DialogDescription className="w-full flex flex-col justify-center items-center my-5">
-                        <p className="text-center text-base pb-2">
-                            {loading
-                                ? "Uploading..."
-                                : "Upload PDF to Chat With"}
-                        </p>
-                        {loading ? (
-                            <Loader2 className="animate-spin w-10 h-10 text-white" />
-                        ) : (
-                            <Button
-                                variant="default"
-                                id="uploadpdf"
-                                onClick={() => fileRef?.current?.click()}
-                            >
-                                <Upload className="w-4 h-4 mr-1" />
-                                Upload
-                                <Input
-                                    type="file"
-                                    ref={fileRef}
-                                    accept=".pdf"
-                                    onChange={handleFileUpload}
-                                    id="uploadpdf"
-                                    className="hidden"
-                                />
-                            </Button>
-                        )}
-                        {error && (
-                            <p className="text-rose-500 text-sm pt-3">
-                                Something went wrong please try again.
-                            </p>
-                        )}
-                    </DialogDescription>
-                </DialogContent>
-            </Dialog>
-        );
-    }
-
-    return (
-        <Drawer open={uploadModal.isOpen} onOpenChange={uploadModal.setIsOpen}>
-            <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Upload PDF</DrawerTitle>
-                    <DrawerDescription>
-                        <p className="text-center text-base">
-                            {loading
-                                ? "Uploading..."
-                                : "Upload PDF to Chat With"}
-                        </p>
-                    </DrawerDescription>
-                    <DrawerFooter>
+                    <DialogFooter className="gap-y-2 bg-red-500">
                         <Button
-                            variant="default"
                             id="uploadpdf"
                             onClick={() => fileRef?.current?.click()}
                             disabled={loading}
@@ -160,8 +115,51 @@ const UploadModal = () => {
                                 Something went wrong please try again.
                             </p>
                         )}
-                    </DrawerFooter>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        );
+    }
+
+    return (
+        <Drawer open={uploadModal.isOpen} onOpenChange={uploadModal.setIsOpen}>
+            <DrawerContent>
+                <DrawerHeader className="text-left">
+                    <DrawerTitle>Upload PDF</DrawerTitle>
+                    <DrawerDescription>
+                        {loading ? "Uploading..." : "Upload PDF to Chat With"}
+                    </DrawerDescription>
                 </DrawerHeader>
+                <DrawerFooter className="pt-1">
+                    <Button
+                        id="uploadpdf"
+                        onClick={() => fileRef?.current?.click()}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                            <>
+                                <Upload className="w-4 h-4 mr-1" />
+                                Upload
+                            </>
+                        )}
+                        <Input
+                            type="file"
+                            ref={fileRef}
+                            accept=".pdf"
+                            onChange={handleFileUpload}
+                            id="uploadpdf"
+                            className="hidden"
+                        />
+                    </Button>
+
+                    {error && (
+                        <p className="text-rose-500 text-sm pt-1">
+                            Something went wrong please try again.
+                        </p>
+                    )}
+                </DrawerFooter>
             </DrawerContent>
         </Drawer>
     );

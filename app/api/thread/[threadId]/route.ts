@@ -41,3 +41,32 @@ export async function DELETE(
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
+
+export async function GET(
+    request: NextRequest,
+    { params }: { params: { threadId: string } }
+) {
+    try {
+        const { userId } = auth();
+
+        if (!userId) return new NextResponse("Unauthorised", { status: 401 });
+
+        const thread = await db.thread.findUnique({
+            where: {
+                id: params?.threadId,
+                userId,
+            },
+        });
+
+        if (!thread) return new NextResponse("Not Found", { status: 404 });
+
+        const file = await openai.files.content(thread.fileId);
+
+        console.log(file.formData);
+
+        return NextResponse.json({ data: "Hiiii" });
+    } catch (error) {
+        console.log("[GET_FILE_ERROR]", error);
+        return new NextResponse("Internal Error", { status: 500 });
+    }
+}

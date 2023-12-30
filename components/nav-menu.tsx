@@ -14,6 +14,7 @@ import { useDeleteChat } from "@/hooks/use-delete-chat-modal";
 import { usePathname } from "next/navigation";
 import { Thread } from "@prisma/client";
 import { cn } from "@/lib/utils";
+import { useDownloadFile } from "@/hooks/use-downoad-file-modal";
 
 interface NavMenuProps {
     threads: Thread[];
@@ -22,6 +23,7 @@ interface NavMenuProps {
 const NavMenu = ({ threads }: NavMenuProps) => {
     const clearMessages = useClearMessages();
     const deleteChat = useDeleteChat();
+    const downloadFile = useDownloadFile();
     const pathname = usePathname();
     const threadId = pathname.split("/")[2];
     const newThreads = threads.map((thread) => thread.id);
@@ -42,12 +44,12 @@ const NavMenu = ({ threads }: NavMenuProps) => {
                     >
                         Clear Messages
                     </DropdownMenuItem>
-                    <DropdownMenuItem
+                    {/* <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => downloadFile.setIsOpen(true)}
                     >
                         Download File
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
                     <DropdownMenuItem
                         className="text-rose-500 cursor-pointer"
                         onClick={() => deleteChat.setIsOpen(true)}
