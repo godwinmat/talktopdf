@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
 import NavMenu from "./nav-menu";
 
+import { headers } from "next/headers";
+
 const Navbar = async () => {
     const { userId } = auth();
     const threads = await getThreads(userId as string);
@@ -13,7 +15,7 @@ const Navbar = async () => {
             <MobileSidebar threads={threads} />
             <div className="ml-auto flex justify-center items-center">
                 <ModeToggle />
-                <NavMenu />
+                <NavMenu threads={threads} />
             </div>
         </div>
     );

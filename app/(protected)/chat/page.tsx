@@ -1,5 +1,4 @@
 import NoConversation from "@/components/no-conversation";
-import { useUploadModal } from "@/hooks/use-upload-modal";
 import { getThreads } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
