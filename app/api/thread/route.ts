@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { AddAllCurrentMessagesToDB } from "../__utils";
 
 const firstPrompt = "Give me a short overview of the file";
+const assistantId = process.env.OPENAI_ASSISTANT_ID as string;
 
 export async function POST(request: NextRequest) {
     try {
@@ -25,6 +26,12 @@ export async function POST(request: NextRequest) {
             file,
             purpose: "assistants",
         });
+
+        // Link file to assistant
+        await openai.beta.assistants.files.create(assistantId, {
+            file_id: uploadedFile.id,
+        });
+
         const filename = uploadedFile.filename;
 
         // Create thread and run
@@ -40,6 +47,7 @@ export async function POST(request: NextRequest) {
                 ],
             },
         });
+
         let runStatus = await openai.beta.threads.runs.retrieve(thread_id, id);
 
         // Polling mechanism to see if status is completed

@@ -30,5 +30,5 @@ model Message {
   threadId String
   role     Roles
 
-  createdAt DateTime
+  createdAt DateTime @default(now())
 }

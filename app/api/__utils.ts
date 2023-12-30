@@ -1,7 +1,6 @@
 import db from "@/lib/db";
 import { openai } from "@/lib/openai";
-import { Roles } from "@prisma/client";
-import { ThreadMessage } from "openai/resources/beta/threads/messages/messages.mjs";
+import { Message, Roles } from "@prisma/client";
 
 export const AddAllCurrentMessagesToDB = async (
     threadId: string,
@@ -25,8 +24,11 @@ export const AddAllCurrentMessagesToDB = async (
                 id: message.id,
                 role: message.role as Roles,
                 content: message.content[0].text.value as string,
-                threadId,
-                createdAt: message.created_at,
+                thread: {
+                    connect: {
+                        id: message.thread_id,
+                    },
+                },
             }))
             .reverse();
 
@@ -36,6 +38,8 @@ export const AddAllCurrentMessagesToDB = async (
                 data: message,
             });
         }
+
+        return prismaMessages;
     } catch (error) {
         throw new Error("[ADD_ALL_CURRENT_MESSAGES_TO_DB_ERROR]" + error);
     }

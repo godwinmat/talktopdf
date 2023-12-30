@@ -2,12 +2,10 @@ import { create } from "zustand";
 
 interface useUploadModalStore {
     isOpen: boolean;
-    onOpen: () => void;
-    onClose: () => void;
+    setIsOpen: (value: boolean) => void;
 }
 
 export const useUploadModal = create<useUploadModalStore>((set) => ({
     isOpen: false,
-    onOpen: () => set({ isOpen: true }),
-    onClose: () => set({ isOpen: false }),
+    setIsOpen: (value) => set({ isOpen: value }),
 }));

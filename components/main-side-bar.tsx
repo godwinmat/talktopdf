@@ -41,7 +41,7 @@ interface MainSideBarProps {
 
 const MainSidebar = ({ threads }: MainSideBarProps) => {
     const { user } = useUser();
-    const { onOpen } = useUploadModal();
+    const { setIsOpen } = useUploadModal();
 
     return (
         <div className="space-y-4 flex flex-col h-full text-white relative ">
@@ -55,7 +55,7 @@ const MainSidebar = ({ threads }: MainSideBarProps) => {
                 <Button
                     variant="secondary"
                     className="my-2 py-3"
-                    onClick={onOpen}
+                    onClick={() => setIsOpen(true)}
                 >
                     <Upload className="w-5 h-5 mr-1" /> Upload PDF
                 </Button>

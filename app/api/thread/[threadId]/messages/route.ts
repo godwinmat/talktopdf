@@ -15,14 +15,20 @@ export async function GET(
 
         if (!userId) return new NextResponse("Unauthorised", { status: 401 });
 
+        const thread = await db.thread.findUnique({
+            where: {
+                id: params?.threadId,
+                userId,
+            },
+        });
+
+        if (!thread) {
+            return new NextResponse("Thread Not Found", { status: 404 });
+        }
         // Get thread messages
         const { data } = await openai.beta.threads.messages.list(
             params.threadId
         );
-
-        if (!data) {
-            return new NextResponse("Not Found", { status: 404 });
-        }
 
         return NextResponse.json({ messages: data });
     } catch (error) {
@@ -47,6 +53,7 @@ export async function POST(
         const thread = await db.thread.findUnique({
             where: {
                 id: threadId,
+                userId,
             },
             select: {
                 fileId: true,
@@ -109,6 +116,7 @@ export async function PATCH(
         const thread = await db.thread.findUnique({
             where: {
                 id: params?.threadId,
+                userId,
             },
         });
 

@@ -22,11 +22,12 @@ const SideBarItem = ({ thread }: SideBarItemProps) => {
     return (
         <Link
             href={`/chat/${thread.id}`}
-            onClick={() => router.push(`/chat/${thread.id}`)}
+            // onClick={() => router.push(`/chat/${thread.id}`)}
             className={cn(
-                "text-sm flex p-3 w-full justify-start font-medium cursor-pointer text-default rounded-lg transition",
-                threadId === thread.id &&
-                    "bg-primary text-white dark:text-slate-950"
+                "text-sm flex p-3 w-full justify-start font-medium cursor-pointer text-default rounded-lg transition ",
+                threadId === thread.id
+                    ? "bg-primary text-white dark:text-slate-950"
+                    : "hover:bg-slate-700/50"
             )}
         >
             <div className="flex items-center flex-1">{thread.fileName}</div>

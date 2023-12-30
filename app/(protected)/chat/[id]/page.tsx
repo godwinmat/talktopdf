@@ -19,9 +19,15 @@ const Chat = async ({ params }: ChatIdProps) => {
     if (!thread) {
         redirect("/chat");
     }
+
+    const messages = await db.message.findMany({
+        where: {
+            threadId: params?.id,
+        },
+    });
     return (
-        <div className="w-full h-full flex flex-col">
-            <ChatMessages threadId={params?.id} />
+        <div className="w-full h-full flex flex-col relative">
+            <ChatMessages messages={messages} />
             <ChatInput threadId={params?.id} />
         </div>
     );

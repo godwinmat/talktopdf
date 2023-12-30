@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { useUploadModal } from "@/hooks/use-upload-modal";
 
 const NoConversation = () => {
-    const { onOpen } = useUploadModal();
+    const { setIsOpen } = useUploadModal();
 
     return (
         <div className="flex flex-col justify-center items-center w-full h-full text-lg">
@@ -16,7 +16,7 @@ const NoConversation = () => {
                 alt="no conversation"
             />
             Upload a PDF file to start a conversation
-            <Button className="mt-2" onClick={onOpen}>
+            <Button className="mt-2" onClick={() => setIsOpen(true)}>
                 Upload PDF file
             </Button>
         </div>

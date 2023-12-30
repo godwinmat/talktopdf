@@ -6,6 +6,9 @@ interface ChatBubbleProps {
 }
 
 const ChatBubble = ({ message }: ChatBubbleProps) => {
+    const time = message.createdAt.toLocaleTimeString([], {
+        timeStyle: "short",
+    });
     return (
         <div
             className={cn(
@@ -14,7 +17,7 @@ const ChatBubble = ({ message }: ChatBubbleProps) => {
             )}
         >
             <p className="text-sm">{message.content}</p>
-            <p className="text-xs pt-1">12:02 PM</p>
+            <p className="text-xs pt-1">{time}</p>
         </div>
     );
 };

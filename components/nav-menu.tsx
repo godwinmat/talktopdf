@@ -10,9 +10,11 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useClearMessages } from "@/hooks/use-clear-messages-modal";
+import { useDeleteChat } from "@/hooks/use-delete-chat-modal";
 
 const NavMenu = () => {
-    const { onOpen } = useClearMessages();
+    const clearMessages = useClearMessages();
+    const deleteChat = useDeleteChat();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -20,11 +22,20 @@ const NavMenu = () => {
                     <MoreVertical className="h-[1.2rem] w-[1.2rem]" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="space-y-1">
-                <DropdownMenuItem onClick={onOpen}>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => clearMessages.setIsOpen(true)}
+                >
                     Clear Messages
                 </DropdownMenuItem>
-                <DropdownMenuItem className="bg-rose-500" onClick={() => {}}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => {}}>
+                    Download File
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="text-rose-500 cursor-pointer"
+                    onClick={() => deleteChat.setIsOpen(true)}
+                >
                     Delete Chat
                 </DropdownMenuItem>
             </DropdownMenuContent>
