@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={`${inter.className} w-full h-full`}>
+                <body className={`${inter.className}`}>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"
