@@ -13,7 +13,7 @@ datasource db {
 model Thread {
   id        String     @id @default(uuid()) @map("_id")
   userId    String
-  fileId    String     @unique
+  fileId    String?     @unique
   fileName  String     
   messages  Message[]
 }

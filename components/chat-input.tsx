@@ -46,7 +46,10 @@ const ChatInput = ({ threadId }: ChatInputProps) => {
         }
     }
     return (
-        <form className="py-1 w-full" onSubmit={onSubmit}>
+        <form
+            className="py-1 w-full h-12 absolute bottom-0"
+            onSubmit={onSubmit}
+        >
             {error && (
                 <p className="text-rose-500 text-xs text-center pb-1">
                     Something went wrong please try again.

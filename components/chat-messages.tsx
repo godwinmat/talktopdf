@@ -76,7 +76,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
 
     return (
         <div
-            className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll"
+            className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll mb-12"
             ref={messagesRef}
             onScroll={onScroll}
         >
