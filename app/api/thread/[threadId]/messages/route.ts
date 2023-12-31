@@ -68,7 +68,7 @@ export async function POST(
         await openai.beta.threads.messages.create(threadId, {
             content: message,
             role: "user",
-            file_ids: [thread.fileId],
+            file_ids: [thread.fileId!],
         });
 
         // Create a run
