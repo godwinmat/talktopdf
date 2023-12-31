@@ -9,7 +9,7 @@ type SideBarItemProps = {
     thread: {
         id: string;
         userId: string;
-        fileId: string;
+        fileId: string | null;
         fileName: string;
     };
 };
