@@ -23,8 +23,8 @@ export async function DELETE(
 
         if (!thread) return new NextResponse("Not Found", { status: 404 });
 
-        await openai.beta.assistants.files.del(assistantId, thread.fileId);
-        await openai.files.del(thread.fileId);
+        await openai.beta.assistants.files.del(assistantId, thread.fileId!);
+        await openai.files.del(thread.fileId!);
 
         await openai.beta.threads.del(params.threadId);
 
@@ -60,7 +60,7 @@ export async function GET(
 
         if (!thread) return new NextResponse("Not Found", { status: 404 });
 
-        const file = await openai.files.content(thread.fileId);
+        const file = await openai.files.content(thread.fileId!);
 
         console.log(file.formData);
 
