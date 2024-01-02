@@ -34,7 +34,7 @@ const Chat = async ({ params }: ChatIdProps) => {
         },
     });
     return (
-        <div className="h-full w-full flex flex-col relative">
+        <div className="h-full max-w-4xl flex flex-col relative">
             <ChatMessages messages={messages} />
             <ChatInput threadId={params?.id} />
         </div>

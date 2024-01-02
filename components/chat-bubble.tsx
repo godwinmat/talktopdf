@@ -12,12 +12,14 @@ const ChatBubble = ({ message }: ChatBubbleProps) => {
     return (
         <div
             className={cn(
-                "bg-blue-500 text-white rounded-lg p-3 max-w-[80%] w-fit",
-                message.role === "user" && "ml-auto"
+                "rounded-lg p-2 max-w-[80%] w-fit shadow-sm",
+                message.role === "user"
+                    ? "ml-auto bg-purple-700 text-white"
+                    : "bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100"
             )}
         >
-            <p className="text-sm">{message.content}</p>
-            <p className="text-xs pt-1">{time}</p>
+            <p className="text-[13px] sm:text-sm">{message.content}</p>
+            <p className="text-[10px] pt-1">{time}</p>
         </div>
     );
 };
