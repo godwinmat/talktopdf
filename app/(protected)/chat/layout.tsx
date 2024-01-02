@@ -32,7 +32,7 @@ export default async function ChatIdLayout({
 
                 <div
                     className={
-                        "text-default px-3 py-1 md:px-8 w-full h-[calc(100dvh_-_56px)] flex flex-col items-start"
+                        "text-default pb-1 h-[calc(100dvh_-_44px)] flex flex-col items-start"
                     }
                 >
                     {children}
