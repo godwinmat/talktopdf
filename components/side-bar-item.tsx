@@ -26,7 +26,7 @@ const SideBarItem = ({ thread }: SideBarItemProps) => {
             className={cn(
                 "text-sm flex p-3 w-full justify-start font-medium cursor-pointer text-default rounded-lg transition ",
                 threadId === thread.id
-                    ? "bg-primary text-white dark:text-slate-950"
+                    ? "bg-primary text-slate-100"
                     : "hover:bg-slate-700/50"
             )}
         >

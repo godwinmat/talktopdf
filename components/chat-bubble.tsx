@@ -14,7 +14,7 @@ const ChatBubble = ({ message }: ChatBubbleProps) => {
             className={cn(
                 "rounded-lg p-2 max-w-[80%] w-fit shadow-md",
                 message.role === "user"
-                    ? "ml-auto bg-purple-700 text-slate-100"
+                    ? "ml-auto bg-primary text-slate-100"
                     : "bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100"
             )}
         >

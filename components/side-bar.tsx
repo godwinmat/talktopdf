@@ -80,7 +80,7 @@ const Sidebar = ({ threads }: SideBarProps) => {
 
                     <Button
                         // variant="ghost"
-                        className="w-full bg-primary mt-2"
+                        className="w-full bg-primary mt-2 text-slate-100"
                     >
                         <Sparkles className="h-5 w-5 mr-2" /> Subscribe
                     </Button>
