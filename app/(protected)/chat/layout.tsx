@@ -27,7 +27,7 @@ export default async function ChatIdLayout({
             <div className="hidden h-full md:flex md:w-80 md:flex-col md:fixed md:inset-y-0 border-r">
                 <MainSidebar threads={threads} />
             </div>
-            <main className="md:pl-80 overflow-hidden">
+            <main className="md:pl-80">
                 <Navbar />
 
                 <div
