@@ -54,7 +54,7 @@ const ChatInput = ({ threadId }: ChatInputProps) => {
             )}
             <div className="w-full flex">
                 <Input
-                    className="flex-1 mr-1 border-0 bg-input outline-none focus-visible:ring-0 focus-visible:ring-transparent font-medium text-sm text-default"
+                    className="flex-1 mr-1 border-0 bg-input outline-none focus-visible:ring-0 focus-visible:ring-transparent font-medium text-sm text-default text-[13px] sm:text-sm text-slate-900 dark:text-slate-100 bg-gray-100 dark:bg-gray-900"
                     placeholder="Type a message"
                     onChange={onChange}
                     value={message}
