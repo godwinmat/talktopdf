@@ -3,8 +3,8 @@ import { auth } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
 import NavMenu from "./nav-menu";
 
-import { headers } from "next/headers";
 import db from "@/lib/db";
+import Heading from "./heading";
 
 const Navbar = async () => {
     const { userId } = auth();
@@ -19,7 +19,8 @@ const Navbar = async () => {
     return (
         <div className="flex items-center justify-between px-4 h-12">
             <MobileSidebar chats={chats} />
-            <div className="ml-auto flex justify-center items-center">
+            <Heading chats={chats} />
+            <div className="ml-auto flex justify-center items-center px-1">
                 <ModeToggle />
                 <NavMenu chats={chats} />
             </div>
