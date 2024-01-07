@@ -17,7 +17,7 @@ const Chat = async ({ params }: ChatIdProps) => {
         redirect("/");
     }
 
-    const thread = await db.thread.findUnique({
+    const thread = await db.chat.findUnique({
         where: {
             id: params?.id,
             userId: userId,
@@ -30,13 +30,12 @@ const Chat = async ({ params }: ChatIdProps) => {
 
     const messages = await db.message.findMany({
         where: {
-            threadId: params?.id,
+            chatId: params?.id,
         },
     });
     return (
-        <div className="h-full max-w-4xl flex flex-col relative">
-            <ChatMessages messages={messages} />
-            <ChatInput threadId={params?.id} />
+        <div className="h-full w-full max-w-2xl flex flex-col relative md">
+            <ChatMessages messages={messages} chatId={params.id} />
         </div>
     );
 };

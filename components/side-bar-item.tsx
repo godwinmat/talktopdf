@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 type SideBarItemProps = {
-    thread: {
+    chat: {
         id: string;
         userId: string;
         fileId: string | null;
@@ -14,23 +14,23 @@ type SideBarItemProps = {
     };
 };
 
-const SideBarItem = ({ thread }: SideBarItemProps) => {
+const SideBarItem = ({ chat }: SideBarItemProps) => {
     const router = useRouter();
     const pathname = usePathname();
-    const threadId = pathname.split("/")[2];
+    const chatId = pathname.split("/")[2];
 
     return (
         <Link
-            href={`/chat/${thread.id}`}
-            // onClick={() => router.push(`/chat/${thread.id}`)}
+            href={`/chat/${chat.id}`}
+            // onClick={() => router.push(`/chat/${chat.id}`)}
             className={cn(
                 "text-sm flex p-3 w-full justify-start font-medium cursor-pointer text-default rounded-lg transition ",
-                threadId === thread.id
+                chatId === chat.id
                     ? "bg-primary text-slate-100"
                     : "hover:bg-slate-700/50"
             )}
         >
-            <div className="flex items-center flex-1">{thread.fileName}</div>
+            <div className="flex items-center flex-1">{chat.fileName}</div>
         </Link>
     );
 };

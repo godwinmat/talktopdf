@@ -1,32 +1,24 @@
 "use client";
 
-import Image from "next/image";
-import ChatBubble from "./chat-bubble";
 import { Message } from "@prisma/client";
+import Image from "next/image";
 import { UIEvent, useEffect, useRef, useState } from "react";
+import ChatBubble from "./chat-bubble";
 import Scroller from "./scroller";
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from "./ui/drawer";
-import { Button } from "./ui/button";
-import { useClearMessages } from "@/hooks/use-clear-messages-modal";
+import ChatInput from "./chat-input";
+import ThinkingBubble from "./thinking-bubble";
 
 interface ChatMessagesProps {
     messages: Message[];
+    chatId: string;
 }
 
-const ChatMessages = ({ messages }: ChatMessagesProps) => {
+const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
     const messagesRef = useRef<HTMLDivElement>(null);
     const [showScroller, setShowScroller] = useState(false);
+    const [isThinking, setIsThinking] = useState(false);
 
-    // const [messages, setMessages] = useState<ThreadMessage[]>([]);
+    const [savedMessages, setSavedMessages] = useState<Message[]>(messages);
 
     // async function getMessages(threadId: strng) {
     //     try {
@@ -47,7 +39,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [savedMessages]);
 
     function scrollToBottom() {
         if (messagesRef.current) {
@@ -75,27 +67,37 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
     }
 
     return (
-        <div
-            className="flex-1 max-w-4xl flex flex-col h-full space-y-4 overflow-y-scroll px-3 py-1 md:px-8"
-            ref={messagesRef}
-            onScroll={onScroll}
-        >
-            {messages.map((message) => (
-                <ChatBubble key={message.id} message={message} />
-            ))}
-            {messages.length === 0 && (
-                <div className="flex flex-col items-center text-xl font-medium h-full">
-                    <Image
-                        src="/conversation.png"
-                        width={400}
-                        height={400}
-                        alt="no conversation"
-                    />
-                    No message
-                </div>
-            )}
-            {showScroller && <Scroller onClick={scrollToBottom} />}
-        </div>
+        <>
+            <div
+                className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll px-3 py-1"
+                ref={messagesRef}
+                onScroll={onScroll}
+            >
+                {savedMessages.map((message) => (
+                    <ChatBubble key={message.id} message={message} />
+                ))}
+                {savedMessages.length === 0 && (
+                    <div className="flex flex-col items-center text-xl font-medium h-full">
+                        <Image
+                            src="/conversation.png"
+                            width={400}
+                            height={400}
+                            alt="no conversation"
+                        />
+                        No message
+                    </div>
+                )}
+                {showScroller && <Scroller onClick={scrollToBottom} />}
+                {/* {isThinking && <ThinkingBubble />} */}
+            </div>
+            <ChatInput
+                chatId={chatId}
+                // setIsThinking={setIsThinking}
+                setSavedMessages={setSavedMessages}
+                savedMessages={savedMessages}
+                scrollToBottom={scrollToBottom}
+            />
+        </>
     );
 };
 

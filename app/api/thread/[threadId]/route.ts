@@ -37,7 +37,7 @@ export async function DELETE(
 
         return NextResponse.json({ data: "Thread Deleted" });
     } catch (error) {
-        console.log("[DELETE_MESSAGES_ERROR]", error);
+        console.log("[DELETE_THREAD_ERROR]", error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }

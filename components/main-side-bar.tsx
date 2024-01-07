@@ -15,7 +15,7 @@ import {
 } from "./ui/dropdown-menu";
 import UploadPDF from "./upload-modal";
 import { useUploadModal } from "@/hooks/use-upload-modal";
-import { Thread } from "@prisma/client";
+import { Chat } from "@prisma/client";
 
 // const featuresArray = [
 //     {
@@ -36,10 +36,10 @@ import { Thread } from "@prisma/client";
 // ];
 
 interface MainSideBarProps {
-    threads: Thread[];
+    chats: Chat[];
 }
 
-const MainSidebar = ({ threads }: MainSideBarProps) => {
+const MainSidebar = ({ chats }: MainSideBarProps) => {
     const { user } = useUser();
     const { setIsOpen } = useUploadModal();
 
@@ -61,8 +61,8 @@ const MainSidebar = ({ threads }: MainSideBarProps) => {
                 </Button>
                 <UploadPDF />
                 <div className="space-y-1 mt-5 h-full overflow-y-scroll pb-40 pt-2">
-                    {threads.map((thread) => (
-                        <SideBarItem thread={thread} key={thread.id} />
+                    {chats.map((chat) => (
+                        <SideBarItem chat={chat} key={chat.id} />
                     ))}
                 </div>
                 <Card className="p-3 absolute bottom-0">

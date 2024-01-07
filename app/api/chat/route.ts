@@ -32,15 +32,15 @@ export async function POST(request: NextRequest) {
         const sourceId = response.data.sourceId;
 
         if (sourceId) {
-            const thread = await db.thread.create({
+            const chat = await db.chat.create({
                 data: {
-                    id: sourceId,
+                    fileId: sourceId,
                     userId,
                     fileName: file.name,
                 },
             });
             return NextResponse.json({
-                thread,
+                chat,
             });
         }
     } catch (error) {

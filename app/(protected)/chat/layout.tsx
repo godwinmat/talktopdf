@@ -1,6 +1,6 @@
 import MainSidebar from "@/components/main-side-bar";
 import Navbar from "@/components/navbar";
-import { getThreads } from "@/lib/utils";
+import db from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -16,7 +16,12 @@ export default async function ChatIdLayout({
     children: React.ReactNode;
 }) {
     const { userId } = auth();
-    const threads = await getThreads(userId as string);
+    let chats = await db.chat.findMany({
+        where: {
+            userId: userId as string,
+        },
+    });
+    chats = chats.reverse();
 
     if (!userId) {
         redirect("/");
@@ -25,7 +30,7 @@ export default async function ChatIdLayout({
     return (
         <div className="relative h-full">
             <div className="hidden h-full md:flex md:w-80 md:flex-col md:fixed md:inset-y-0 border-r">
-                <MainSidebar threads={threads} />
+                <MainSidebar chats={chats} />
             </div>
             <main className="md:pl-80">
                 <Navbar />

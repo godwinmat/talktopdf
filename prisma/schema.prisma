@@ -10,10 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Thread {
+model Chat {
   id        String     @id @default(uuid()) @map("_id")
   userId    String
-  fileId    String?     @unique
+  fileId    String     @unique
   fileName  String     
   messages  Message[]
 }
@@ -26,8 +26,8 @@ enum Roles {
 model Message {
   id        String    @id @default(uuid())  @map("_id")
   content   String
-  thread   Thread? @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  threadId String
+  chat   Chat? @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId String
   role     Roles
 
   createdAt DateTime @default(now())

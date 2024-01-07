@@ -29,7 +29,7 @@ const ClearMessagesModal = () => {
     const [loading, setLoading] = useState(false);
     const { isOpen, setIsOpen } = useClearMessages();
     const pathname = usePathname();
-    const threadId = pathname.split("/")[2];
+    const chatId = pathname.split("/")[2];
     const router = useRouter();
     const [error, setError] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -38,7 +38,7 @@ const ClearMessagesModal = () => {
         try {
             setLoading(true);
             setError(false);
-            const res = await fetch(`/api/thread/${threadId}/messages`, {
+            const res = await fetch(`/api/chat/${chatId}/messages`, {
                 method: "PATCH",
             });
 

@@ -4,7 +4,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import { MoreVertical, Sparkles, Upload } from "lucide-react";
 
 // import Logo from "@/components/logo";
-import { Thread } from "@prisma/client";
+import { Chat } from "@prisma/client";
 import SideBarItem from "./side-bar-item";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -19,10 +19,10 @@ import { SheetClose } from "./ui/sheet";
 import { useUploadModal } from "@/hooks/use-upload-modal";
 
 interface SideBarProps {
-    threads: Thread[];
+    chats: Chat[];
 }
 
-const Sidebar = ({ threads }: SideBarProps) => {
+const Sidebar = ({ chats }: SideBarProps) => {
     const { user } = useUser();
     const { setIsOpen } = useUploadModal();
     return (
@@ -42,9 +42,9 @@ const Sidebar = ({ threads }: SideBarProps) => {
                     <Upload className="w-5 h-5 mr-1" /> Upload PDF
                 </Button>
                 <div className="space-y-1 mt-5 h-full overflow-y-scroll pb-40 pt-2">
-                    {threads.map((thread) => (
-                        <SheetClose key={thread.id} asChild>
-                            <SideBarItem thread={thread} />
+                    {chats.map((chat) => (
+                        <SheetClose key={chat.id} asChild>
+                            <SideBarItem chat={chat} />
                         </SheetClose>
                     ))}
                 </div>

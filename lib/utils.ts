@@ -6,12 +6,15 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export const getThreads = async (userId: string) => {
-    const threads = await db.thread.findMany({
-        where: {
-            userId,
-        },
-    });
+export function formatBytes(bytes: number, decimals = 0) {
+    if (bytes === 0) return "0 Bytes";
 
-    return threads.reverse();
-};
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return (
+        parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i]
+    );
+}

@@ -12,25 +12,25 @@ import {
 import { useClearMessages } from "@/hooks/use-clear-messages-modal";
 import { useDeleteChat } from "@/hooks/use-delete-chat-modal";
 import { usePathname } from "next/navigation";
-import { Thread } from "@prisma/client";
+import { Chat } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { useDownloadFile } from "@/hooks/use-downoad-file-modal";
 
 interface NavMenuProps {
-    threads: Thread[];
+    chats: Chat[];
 }
 
-const NavMenu = ({ threads }: NavMenuProps) => {
+const NavMenu = ({ chats }: NavMenuProps) => {
     const clearMessages = useClearMessages();
     const deleteChat = useDeleteChat();
     const downloadFile = useDownloadFile();
     const pathname = usePathname();
-    const threadId = pathname.split("/")[2];
-    const newThreads = threads.map((thread) => thread.id);
-    const threadExist = newThreads.includes(threadId);
+    const chatId = pathname.split("/")[2];
+    const newChats = chats.map((chat) => chat.id);
+    const chatExist = newChats.includes(chatId);
 
     return (
-        <div className={cn("hidden", threadExist && "block")}>
+        <div className={cn("hidden", chatExist && "block")}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">

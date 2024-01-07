@@ -1,21 +1,27 @@
 import MobileSidebar from "@/components/mobile-sidebar";
-import { getThreads } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
 import NavMenu from "./nav-menu";
 
 import { headers } from "next/headers";
+import db from "@/lib/db";
 
 const Navbar = async () => {
     const { userId } = auth();
-    const threads = await getThreads(userId as string);
+
+    let chats = await db.chat.findMany({
+        where: {
+            userId: userId as string,
+        },
+    });
+    chats = chats.reverse();
 
     return (
         <div className="flex items-center justify-between px-4 h-12">
-            <MobileSidebar threads={threads} />
+            <MobileSidebar chats={chats} />
             <div className="ml-auto flex justify-center items-center">
                 <ModeToggle />
-                <NavMenu threads={threads} />
+                <NavMenu chats={chats} />
             </div>
         </div>
     );

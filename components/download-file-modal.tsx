@@ -29,7 +29,7 @@ const DownloadFileModal = () => {
     const [loading, setLoading] = useState(false);
     const { isOpen, setIsOpen } = useDownloadFile();
     const pathname = usePathname();
-    const threadId = pathname.split("/")[2];
+    const chatId = pathname.split("/")[2];
     const router = useRouter();
     const [error, setError] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 640px)");
@@ -38,7 +38,7 @@ const DownloadFileModal = () => {
         try {
             setLoading(true);
             setError(false);
-            const res = await fetch(`/api/thread/${threadId}`, {
+            const res = await fetch(`/api/chat/${chatId}`, {
                 method: "GET",
             });
 

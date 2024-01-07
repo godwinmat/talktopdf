@@ -1,20 +1,27 @@
 "use client";
 
 import { Loader2, SendHorizonal } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { Message } from "@prisma/client";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 interface ChatInputProps {
-    threadId: string;
+    chatId: string;
+    setIsThinking?: (value: boolean) => void;
+    scrollToBottom: () => void;
+    setSavedMessages: (value: Message[]) => void;
+    savedMessages: Message[];
 }
 
-const ChatInput = ({ threadId }: ChatInputProps) => {
+const ChatInput = ({
+    chatId,
+    setSavedMessages,
+    savedMessages,
+}: ChatInputProps) => {
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
     const [error, setError] = useState(false);
 
     function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -28,7 +35,7 @@ const ChatInput = ({ threadId }: ChatInputProps) => {
             event.preventDefault();
 
             // const apiMessage = message;
-            await fetch(`/api/thread/${threadId}/messages`, {
+            const res = await fetch(`/api/chat/${chatId}/messages`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,17 +43,43 @@ const ChatInput = ({ threadId }: ChatInputProps) => {
                 body: JSON.stringify(message),
             });
 
-            router.refresh();
+            const response = await res.json();
+
+            if (response.message === "success") {
+                setMessage("");
+                setLoading(false);
+                response.data.createdAt = new Date(response.data.createdAt);
+                setSavedMessages([...savedMessages, response.data]);
+
+                const newResponse = await fetch(
+                    `/api/chat/${chatId}/messages`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                const parsedResponse = await newResponse.json();
+
+                parsedResponse.message.createdAt = new Date(
+                    parsedResponse.message.createdAt
+                );
+                setSavedMessages([
+                    ...savedMessages,
+                    response.data,
+                    parsedResponse.message,
+                ]);
+            }
         } catch (error) {
             console.log(error);
             setError(true);
         } finally {
-            setMessage("");
             setLoading(false);
         }
     }
     return (
-        <form className="w-full px-3 py-1 md:px-8" onSubmit={onSubmit}>
+        <form className="w-full px-3 py-1" onSubmit={onSubmit}>
             {error && (
                 <p className="text-rose-500 text-xs text-center pb-1">
                     Something went wrong please try again.

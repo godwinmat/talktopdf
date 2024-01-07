@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./side-bar";
-import { Thread } from "@prisma/client";
+import { Chat } from "@prisma/client";
 
 interface MobileSideBarProps {
-    threads: Thread[];
+    chats: Chat[];
 }
 
-const MobileSidebar = ({ threads }: MobileSideBarProps) => {
+const MobileSidebar = ({ chats }: MobileSideBarProps) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const MobileSidebar = ({ threads }: MobileSideBarProps) => {
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-0 w-80">
-                <Sidebar threads={threads} />
+                <Sidebar chats={chats} />
             </SheetContent>
         </Sheet>
     );

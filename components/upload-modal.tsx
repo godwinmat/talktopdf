@@ -24,6 +24,7 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "./ui/drawer";
+import { formatBytes } from "@/lib/utils";
 
 const UploadModal = () => {
     const fileRef = useRef<HTMLInputElement>(null);
@@ -32,32 +33,37 @@ const UploadModal = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 640px)");
+    const [file, setFile] = useState<File>();
 
-    const handleFileUpload = async (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setLoading(true);
-        setError(false);
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        // Validate file type
+        if (!file || !file.type.includes("pdf")) {
+            toast("Please select a PDF file.");
+            return;
+        }
+
+        setFile(file);
+    };
+
+    const handleFileUpload = async () => {
         try {
-            const file = event.target.files?.[0];
+            setLoading(true);
+            setError(false);
 
-            // Validate file type
-            if (!file || !file.type.includes("pdf")) {
-                toast("Please select a PDF file.");
-                return;
-            }
             // Upload file to server
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append("file", file!);
 
-            const res = await fetch("/api/thread", {
+            const res = await fetch("/api/chat", {
                 method: "POST",
                 body: formData,
             });
             const data = await res.json();
 
-            if (data.thread.id) {
-                router.replace(`/chat/${data.thread.id}`);
+            if (data.chat.id) {
+                router.replace(`/chat/${data.chat.id}`);
                 router.refresh();
                 toast("PDF Uploaded Successfully");
                 uploadModal.setIsOpen(false);
@@ -84,31 +90,42 @@ const UploadModal = () => {
                                 ? "Uploading..."
                                 : "Upload PDF to Chat With"}
                         </DialogDescription>
+                        {file && (
+                            <p className="text-xs text-slate-100">
+                                {file.name} {formatBytes(file.size)}
+                            </p>
+                        )}
                     </DialogHeader>
 
-                    <DialogFooter className="gap-y-2 bg-red-500">
-                        <Button
+                    <DialogFooter className="gap-y-2">
+                        <Input
+                            type="file"
+                            ref={fileRef}
+                            accept=".pdf"
+                            onChange={onChange}
                             id="uploadpdf"
-                            onClick={() => fileRef?.current?.click()}
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                            ) : (
-                                <>
-                                    <Upload className="w-4 h-4 mr-1" />
-                                    Upload
-                                </>
-                            )}
-                            <Input
-                                type="file"
-                                ref={fileRef}
-                                accept=".pdf"
-                                onChange={handleFileUpload}
+                            className="hidden"
+                        />
+                        {file ? (
+                            <Button
                                 id="uploadpdf"
-                                className="hidden"
-                            />
-                        </Button>
+                                onClick={handleFileUpload}
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                ) : (
+                                    <>
+                                        <Upload className="w-4 h-4 mr-1" />
+                                        Upload
+                                    </>
+                                )}
+                            </Button>
+                        ) : (
+                            <Button onClick={() => fileRef?.current?.click()}>
+                                Select
+                            </Button>
+                        )}
 
                         {error && (
                             <p className="text-rose-500 text-sm pt-1">
@@ -131,28 +148,39 @@ const UploadModal = () => {
                     </DrawerDescription>
                 </DrawerHeader>
                 <DrawerFooter className="pt-1">
-                    <Button
+                    {file && (
+                        <p className="text-xs text-slate-100">
+                            {file.name} {formatBytes(file.size)}
+                        </p>
+                    )}
+                    <Input
+                        type="file"
+                        ref={fileRef}
+                        accept=".pdf"
+                        onChange={onChange}
                         id="uploadpdf"
-                        onClick={() => fileRef?.current?.click()}
-                        disabled={loading}
-                    >
-                        {loading ? (
-                            <Loader2 className="w-5 h-5 animate-spin" />
-                        ) : (
-                            <>
-                                <Upload className="w-4 h-4 mr-1" />
-                                Upload
-                            </>
-                        )}
-                        <Input
-                            type="file"
-                            ref={fileRef}
-                            accept=".pdf"
-                            onChange={handleFileUpload}
+                        className="hidden"
+                    />
+                    {file ? (
+                        <Button
                             id="uploadpdf"
-                            className="hidden"
-                        />
-                    </Button>
+                            onClick={handleFileUpload}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                            ) : (
+                                <>
+                                    <Upload className="w-4 h-4 mr-1" />
+                                    Upload
+                                </>
+                            )}
+                        </Button>
+                    ) : (
+                        <Button onClick={() => fileRef?.current?.click()}>
+                            Select
+                        </Button>
+                    )}
 
                     {error && (
                         <p className="text-rose-500 text-sm pt-1">
