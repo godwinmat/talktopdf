@@ -43,7 +43,7 @@ const Sidebar = ({ chats }: SideBarProps) => {
                 </Button>
                 <div className="space-y-1 mt-5 h-full overflow-y-scroll pb-40 pt-2">
                     {chats.map((chat) => (
-                        <SheetClose key={chat.id} asChild>
+                        <SheetClose key={chat.id} className="w-full">
                             <SideBarItem chat={chat} />
                         </SheetClose>
                     ))}
