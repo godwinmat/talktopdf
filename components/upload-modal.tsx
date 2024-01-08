@@ -2,7 +2,7 @@
 
 import { Loader2, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
@@ -66,6 +66,7 @@ const UploadModal = () => {
                 router.replace(`/chat/${data.chat.id}`);
                 router.refresh();
                 toast("PDF Uploaded Successfully");
+                setFile(undefined);
                 uploadModal.setIsOpen(false);
             }
         } catch (error) {
@@ -80,7 +81,11 @@ const UploadModal = () => {
         return (
             <Dialog
                 open={uploadModal.isOpen}
-                onOpenChange={uploadModal.setIsOpen}
+                onOpenChange={(value) => {
+                    console.log(value);
+                    uploadModal.setIsOpen(value);
+                    setFile(undefined);
+                }}
             >
                 <DialogContent className="rounded-lg">
                     <DialogHeader>
@@ -139,7 +144,13 @@ const UploadModal = () => {
     }
 
     return (
-        <Drawer open={uploadModal.isOpen} onOpenChange={uploadModal.setIsOpen}>
+        <Drawer
+            open={uploadModal.isOpen}
+            onOpenChange={(value) => {
+                uploadModal.setIsOpen(value);
+                setFile(undefined);
+            }}
+        >
             <DrawerContent>
                 <DrawerHeader className="text-left">
                     <DrawerTitle>Upload PDF</DrawerTitle>
