@@ -33,6 +33,8 @@ const Chat = async ({ params }: ChatIdProps) => {
             chatId: params?.id,
         },
     });
+
+    console.log(messages);
     return (
         <div className="h-full w-full max-w-2xl flex flex-col relative md">
             <ChatMessages messages={messages} chatId={params.id} />

@@ -20,26 +20,13 @@ const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
 
     const [savedMessages, setSavedMessages] = useState<Message[]>(messages);
 
-    // async function getMessages(threadId: strng) {
-    //     try {
-    //         let res = await fetch(`/api/thread/${threadId}/messages`, {
-    //             method: "GET",
-    //         });
-    //         const data = await res.json();
-    //         console.log(data.messages.length);
-    //         setMessages(data.messages.reverse());
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getMessages(threadId);
-    // }, []);
-
     useEffect(() => {
         scrollToBottom();
     }, [savedMessages]);
+
+    useEffect(() => {
+        setSavedMessages(messages);
+    }, [messages]);
 
     function scrollToBottom() {
         if (messagesRef.current) {
@@ -73,10 +60,10 @@ const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
                 ref={messagesRef}
                 onScroll={onScroll}
             >
-                {savedMessages.map((message) => (
+                {savedMessages?.map((message) => (
                     <ChatBubble key={message.id} message={message} />
                 ))}
-                {savedMessages.length === 0 && (
+                {savedMessages?.length === 0 && (
                     <div className="flex flex-col items-center text-xl font-medium h-full">
                         <Image
                             src="/conversation.png"
@@ -94,7 +81,7 @@ const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
                 chatId={chatId}
                 // setIsThinking={setIsThinking}
                 setSavedMessages={setSavedMessages}
-                savedMessages={savedMessages}
+                savedMessages={savedMessages!}
                 scrollToBottom={scrollToBottom}
             />
         </>

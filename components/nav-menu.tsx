@@ -38,12 +38,14 @@ const NavMenu = ({ chats }: NavMenuProps) => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => clearMessages.setIsOpen(true)}
-                    >
-                        Clear Messages
-                    </DropdownMenuItem>
+                    {chats.length > 0 && (
+                        <DropdownMenuItem
+                            className="cursor-pointer"
+                            onClick={() => clearMessages.setIsOpen(true)}
+                        >
+                            Clear Messages
+                        </DropdownMenuItem>
+                    )}
                     {/* <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={() => downloadFile.setIsOpen(true)}
