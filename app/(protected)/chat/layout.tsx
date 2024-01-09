@@ -1,7 +1,7 @@
 import MainSidebar from "@/components/main-side-bar";
 import Navbar from "@/components/navbar";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs";
+import { RedirectToSignIn, auth } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -16,16 +16,15 @@ export default async function ChatIdLayout({
     children: React.ReactNode;
 }) {
     const { userId } = auth();
+    if (!userId) {
+        return <RedirectToSignIn />;
+    }
     let chats = await db.chat.findMany({
         where: {
             userId: userId as string,
         },
     });
     chats = chats.reverse();
-
-    if (!userId) {
-        redirect("/");
-    }
 
     return (
         <div className="relative h-full">

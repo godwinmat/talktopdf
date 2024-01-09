@@ -1,6 +1,6 @@
 "use client";
 
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { SignOutButton, useClerk, useUser } from "@clerk/nextjs";
 import { MoreVertical, Sparkles, Upload } from "lucide-react";
 
 // import Logo from "@/components/logo";
@@ -25,6 +25,8 @@ interface SideBarProps {
 const Sidebar = ({ chats }: SideBarProps) => {
     const { user } = useUser();
     const { setIsOpen } = useUploadModal();
+    const { signOut } = useClerk();
+
     return (
         <div className="space-y-4 flex flex-col h-full text-white relative ">
             <div className="px-3 py-2 flex-1 flex flex-col overflow-y-scroll">
@@ -71,7 +73,11 @@ const Sidebar = ({ chats }: SideBarProps) => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" side="top">
                                 <DropdownMenuItem>
-                                    <SignOutButton>Sign Out</SignOutButton>
+                                    <SignOutButton
+                                        signOutCallback={() => signOut()}
+                                    >
+                                        Sign Out
+                                    </SignOutButton>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>Settings</DropdownMenuItem>
                             </DropdownMenuContent>
@@ -80,7 +86,7 @@ const Sidebar = ({ chats }: SideBarProps) => {
 
                     <Button
                         // variant="ghost"
-                        className="w-full bg-primary mt-2 text-slate-100"
+                        className="w-full mt-2 text-slate-100"
                     >
                         <Sparkles className="h-5 w-5 mr-2" /> Subscribe
                     </Button>
