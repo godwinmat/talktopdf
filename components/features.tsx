@@ -26,7 +26,7 @@ const Features = () => {
             </div>
             <div className="flex flex-col md:flex-row-reverse justify-center items-center space-x-5">
                 <div>
-                    <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100  pb-2">
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100  pb-2">
                         Toggle Light and Dark mode
                     </h2>
                     <p className="text-muted-foreground">
