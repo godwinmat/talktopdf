@@ -12,7 +12,7 @@ const Heading = ({ chats }: HeadingProps) => {
     const chatId = pathname.split("/")[2];
     const chat = chats.find((chat) => chat.id === chatId);
 
-    return <div className="line-clamp-1">{chat?.fileName}</div>;
+    return <div className="line-clamp-1 pl-2">{chat?.fileName}</div>;
 };
 
 export default Heading;

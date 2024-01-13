@@ -5,6 +5,7 @@ import UploadModal from "../upload-modal";
 import DeleteChatModal from "../delete-chat-modal";
 import ClearMessagesModal from "../clear-messages-modal";
 import DownloadFileModal from "../download-file-modal";
+import ExportChatModal from "../export-chat-modal";
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -21,6 +22,7 @@ export const ModalProvider = () => {
             <DeleteChatModal />
             <ClearMessagesModal />
             <DownloadFileModal />
+            <ExportChatModal />
         </>
     );
 };

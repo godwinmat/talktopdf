@@ -31,7 +31,9 @@ const SideBarItem = ({ chat }: SideBarItemProps) => {
                     "bg-primary text-slate-100 hover:bg-primary"
             )}
         >
-            <div className="flex items-center flex-1">{chat.fileName}</div>
+            <div className="flex items-center flex-1 text-sm">
+                {chat.fileName}
+            </div>
         </Button>
     );
 };

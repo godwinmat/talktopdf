@@ -1,26 +1,40 @@
 import { SignInButton, SignUpButton, UserButton, auth } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import Logo from "./logo";
+import CustomUserButton from "./custom-user-button";
 
 const HomeNavBar = () => {
     const { userId } = auth();
     return (
-        <div className="flex justify-between py-2 px-10">
-            <p>TalkToPDF</p>
+        <div className="w-full flex justify-between items-center py-2 px-2 sm:px-5 lg:px-10">
+            <Logo />
             {userId ? (
                 <div className="flex items-center justify-center space-x-5">
-                    <Button asChild>
+                    <Button size="sm" asChild>
                         <Link href="/chat">Chat</Link>
                     </Button>
-                    <UserButton afterSignOutUrl="/" />
+                    <CustomUserButton />
                 </div>
             ) : (
-                <div className="space-x-5">
+                <div className="space-x-2">
                     <SignUpButton mode="modal" afterSignUpUrl="/chat">
-                        Sign Up
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-sm sm:text-base"
+                        >
+                            Sign Up
+                        </Button>
                     </SignUpButton>
                     <SignInButton mode="modal" afterSignInUrl="/chat">
-                        Sign In
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-sm sm:text-base"
+                        >
+                            Sign In
+                        </Button>
                     </SignInButton>
                 </div>
             )}

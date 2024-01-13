@@ -1,7 +1,7 @@
 import SignUp from "../../_components/sign-up";
 
 export const metadata = {
-    title: "AiSolution - Sign Up",
+    title: "TalkToPDF - Sign Up",
     description: "Sign Up",
 };
 

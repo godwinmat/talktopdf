@@ -56,7 +56,7 @@ const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
     return (
         <>
             <div
-                className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll px-3 py-1"
+                className="flex-1 flex flex-col h-full space-y-4 overflow-y-scroll px-3 py-1 lg:scrollbar-hide"
                 ref={messagesRef}
                 onScroll={onScroll}
             >
@@ -64,14 +64,8 @@ const ChatMessages = ({ messages = [], chatId }: ChatMessagesProps) => {
                     <ChatBubble key={message.id} message={message} />
                 ))}
                 {savedMessages?.length === 0 && (
-                    <div className="flex flex-col items-center text-xl font-medium h-full">
-                        <Image
-                            src="/conversation.png"
-                            width={400}
-                            height={400}
-                            alt="no conversation"
-                        />
-                        No message
+                    <div className="h-full w-full flex justify-center items-center">
+                        <p className="text-muted-foreground">No Message</p>
                     </div>
                 )}
                 {showScroller && <Scroller onClick={scrollToBottom} />}

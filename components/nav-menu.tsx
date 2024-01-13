@@ -2,6 +2,12 @@
 
 import { MoreVertical } from "lucide-react";
 
+import { useClearMessages } from "@/hooks/use-clear-messages-modal";
+import { useDeleteChat } from "@/hooks/use-delete-chat-modal";
+import { useExportChat } from "@/hooks/use-export-chat-modal";
+import { cn } from "@/lib/utils";
+import { Chat } from "@prisma/client";
+import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import {
     DropdownMenu,
@@ -9,12 +15,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useClearMessages } from "@/hooks/use-clear-messages-modal";
-import { useDeleteChat } from "@/hooks/use-delete-chat-modal";
-import { usePathname } from "next/navigation";
-import { Chat } from "@prisma/client";
-import { cn } from "@/lib/utils";
-import { useDownloadFile } from "@/hooks/use-downoad-file-modal";
 
 interface NavMenuProps {
     chats: Chat[];
@@ -23,17 +23,22 @@ interface NavMenuProps {
 const NavMenu = ({ chats }: NavMenuProps) => {
     const clearMessages = useClearMessages();
     const deleteChat = useDeleteChat();
-    const downloadFile = useDownloadFile();
+    const exportChat = useExportChat();
     const pathname = usePathname();
     const chatId = pathname.split("/")[2];
     const newChats = chats.map((chat) => chat.id);
     const chatExist = newChats.includes(chatId);
+    const chat = chats.find((chat) => chat.id === chatId);
 
     return (
         <div className={cn("hidden", chatExist && "block")}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="focus-visible:ring-transparent"
+                    >
                         <MoreVertical className="h-[1.2rem] w-[1.2rem]" />
                     </Button>
                 </DropdownMenuTrigger>
@@ -52,6 +57,17 @@ const NavMenu = ({ chats }: NavMenuProps) => {
                     >
                         Download File
                     </DropdownMenuItem> */}
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => {
+                            exportChat.setIsOpen(true);
+                            if (chat) {
+                                exportChat.setFilename(chat.fileName);
+                            }
+                        }}
+                    >
+                        Export Chat
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                         className="text-rose-500 cursor-pointer"
                         onClick={() => deleteChat.setIsOpen(true)}

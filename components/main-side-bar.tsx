@@ -16,6 +16,7 @@ import {
 import UploadPDF from "./upload-modal";
 import { useUploadModal } from "@/hooks/use-upload-modal";
 import { Chat } from "@prisma/client";
+import Logo from "./logo";
 
 // const featuresArray = [
 //     {
@@ -48,9 +49,7 @@ const MainSidebar = ({ chats }: MainSideBarProps) => {
             <div className="px-3 py-2 flex-1 flex flex-col overflow-y-scroll">
                 {/* <Logo classes="flex items-center pl-3 mb-14 text-default" /> */}
                 <div className="mt-7 w-full flex justify-center">
-                    <p className="text-default p-1 font-bold text-lg">
-                        Talk To PDF
-                    </p>
+                    <Logo />
                 </div>
                 <Button
                     variant="secondary"
@@ -65,7 +64,7 @@ const MainSidebar = ({ chats }: MainSideBarProps) => {
                         <SideBarItem chat={chat} key={chat.id} />
                     ))}
                 </div>
-                <Card className="p-3 absolute bottom-0">
+                <Card className="p-3 absolute bottom-1">
                     <div className="flex items-center">
                         <Avatar className="bg-red-500">
                             <AvatarImage src={user?.imageUrl} />
@@ -87,20 +86,20 @@ const MainSidebar = ({ chats }: MainSideBarProps) => {
                                 <MoreVertical className="cursor-pointer" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" side="top">
-                                <DropdownMenuItem>
-                                    <SignOutButton>Sign Out</SignOutButton>
+                                <DropdownMenuItem asChild className="w-full">
+                                    <SignOutButton />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>Settings</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
 
-                    <Button
+                    {/* <Button
                         // variant="ghost"
                         className="w-full bg-primary mt-2 text-slate-100"
                     >
                         <Sparkles className="h-5 w-5 mr-2" /> Subscribe
-                    </Button>
+                    </Button> */}
                 </Card>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import MobileSidebar from "@/components/mobile-sidebar";
-import { auth } from "@clerk/nextjs";
+import { SignOutButton, UserButton, auth } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
 import NavMenu from "./nav-menu";
 

@@ -1,8 +1,8 @@
 import ChatInput from "@/components/chat-input";
 import ChatMessages from "@/components/chat-messages";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { RedirectToSignIn, auth } from "@clerk/nextjs";
+import { notFound, redirect } from "next/navigation";
 
 interface ChatIdProps {
     params: {
@@ -14,7 +14,7 @@ const Chat = async ({ params }: ChatIdProps) => {
     const { userId } = auth();
 
     if (!userId) {
-        redirect("/");
+        return <RedirectToSignIn />;
     }
 
     const thread = await db.chat.findUnique({
@@ -25,7 +25,8 @@ const Chat = async ({ params }: ChatIdProps) => {
     });
 
     if (!thread) {
-        redirect("/chat");
+        // redirect("/chat");
+        notFound();
     }
 
     const messages = await db.message.findMany({
@@ -34,7 +35,6 @@ const Chat = async ({ params }: ChatIdProps) => {
         },
     });
 
-    console.log(messages);
     return (
         <div className="h-full w-full max-w-2xl flex flex-col relative md">
             <ChatMessages messages={messages} chatId={params.id} />

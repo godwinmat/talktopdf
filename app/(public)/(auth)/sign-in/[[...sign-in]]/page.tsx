@@ -1,7 +1,7 @@
 import SignIn from "../../_components/sign-in";
 
 export const metadata = {
-    title: "AiSolution - Sign In",
+    title: "TalkToPDF - Sign In",
     description: "Sign In",
 };
 

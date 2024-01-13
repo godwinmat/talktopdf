@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
     title: "Talk To PDF",
@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={`${inter.className} w-full h-full`}>
+                <body className={`${nunito.className} w-full h-full`}>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"

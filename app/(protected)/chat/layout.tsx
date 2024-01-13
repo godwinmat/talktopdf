@@ -24,6 +24,7 @@ export default async function ChatIdLayout({
             userId: userId as string,
         },
     });
+
     chats = chats.reverse();
 
     return (
