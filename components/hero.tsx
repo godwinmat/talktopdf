@@ -21,7 +21,7 @@ const Hero = () => {
                     productivity - start chatting with your PDFs today.
                 </p>
                 {userId ? (
-                    <div className="flex  space-x-5">
+                    <div className="space-x-5">
                         <Button asChild>
                             <Link href="/chat">Start Chatting</Link>
                         </Button>
