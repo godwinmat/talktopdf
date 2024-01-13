@@ -106,7 +106,7 @@ const ExportChatModal = () => {
                     <DrawerTitle>Export Chat</DrawerTitle>
                     <DrawerDescription>
                         The chat will be exported as
-                        <b className="text-bold text-white">{` ${
+                        <b className="text-bold text-default">{` ${
                             filename.split(".")[0]
                         }.txt`}</b>
                     </DrawerDescription>

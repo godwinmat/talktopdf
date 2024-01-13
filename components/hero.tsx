@@ -15,15 +15,16 @@ const Hero = () => {
                     your PDFs
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 py-5">
-                    Chat, and transform the way you work with PDF files. This
-                    app brings real-time communication to your documents, making
-                    collaboration effortless and efficient. Elevate your
-                    productivity - start chatting with your PDFs today.
+                    Transform the way you engage with PDF files using our
+                    cutting-edge app. Experience the seamless integration of
+                    real-time communication within your PDFs, enhancing
+                    efficiency for a more dynamic interaction. Elevate your
+                    productivity and start a conversation with your PDFs today
                 </p>
                 {userId ? (
                     <div className="space-x-5">
                         <Button asChild>
-                            <Link href="/chat">Start Chatting</Link>
+                            <Link href="/chat">Start a Conversation</Link>
                         </Button>
                     </div>
                 ) : (
