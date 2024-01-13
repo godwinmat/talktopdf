@@ -96,7 +96,7 @@ const UploadModal = () => {
                                 : "Upload PDF to Chat With"}
                         </DialogDescription>
                         {file && (
-                            <p className="text-xs text-slate-100">
+                            <p className="text-xs text-default">
                                 {file.name} {formatBytes(file.size)}
                             </p>
                         )}
@@ -160,7 +160,7 @@ const UploadModal = () => {
                 </DrawerHeader>
                 <DrawerFooter className="pt-1">
                     {file && (
-                        <p className="text-xs text-slate-100">
+                        <p className="text-xs text-default">
                             {file.name} {formatBytes(file.size)}
                         </p>
                     )}
