@@ -18,6 +18,7 @@ import {
 import { SheetClose } from "./ui/sheet";
 import { useUploadModal } from "@/hooks/use-upload-modal";
 import Logo from "./logo";
+import { useSettings } from "@/hooks/use-settings-modal";
 
 interface SideBarProps {
     chats: Chat[];
@@ -26,7 +27,7 @@ interface SideBarProps {
 const Sidebar = ({ chats }: SideBarProps) => {
     const { user } = useUser();
     const { setIsOpen } = useUploadModal();
-    const { signOut } = useClerk();
+    const settings = useSettings();
 
     return (
         <div className="space-y-4 flex flex-col h-full text-white relative ">
@@ -74,7 +75,11 @@ const Sidebar = ({ chats }: SideBarProps) => {
                                 <DropdownMenuItem asChild className="w-full">
                                     <SignOutButton />
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => settings.setIsOpen(true)}
+                                >
+                                    Settings
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

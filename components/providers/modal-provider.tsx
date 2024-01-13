@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import UploadModal from "../upload-modal";
-import DeleteChatModal from "../delete-chat-modal";
 import ClearMessagesModal from "../clear-messages-modal";
+import DeleteChatModal from "../delete-chat-modal";
 import DownloadFileModal from "../download-file-modal";
 import ExportChatModal from "../export-chat-modal";
+import SettingsModal from "../settings";
+import UploadModal from "../upload-modal";
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -23,6 +24,7 @@ export const ModalProvider = () => {
             <ClearMessagesModal />
             <DownloadFileModal />
             <ExportChatModal />
+            <SettingsModal />
         </>
     );
 };

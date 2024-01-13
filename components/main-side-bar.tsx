@@ -17,6 +17,7 @@ import UploadPDF from "./upload-modal";
 import { useUploadModal } from "@/hooks/use-upload-modal";
 import { Chat } from "@prisma/client";
 import Logo from "./logo";
+import { useSettings } from "@/hooks/use-settings-modal";
 
 // const featuresArray = [
 //     {
@@ -43,6 +44,7 @@ interface MainSideBarProps {
 const MainSidebar = ({ chats }: MainSideBarProps) => {
     const { user } = useUser();
     const { setIsOpen } = useUploadModal();
+    const settings = useSettings();
 
     return (
         <div className="space-y-4 flex flex-col h-full text-white relative ">
@@ -89,7 +91,11 @@ const MainSidebar = ({ chats }: MainSideBarProps) => {
                                 <DropdownMenuItem asChild className="w-full">
                                     <SignOutButton />
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => settings.setIsOpen(true)}
+                                >
+                                    Settings
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
