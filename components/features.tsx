@@ -13,8 +13,8 @@ const Features = () => {
                         Effortlessly capture and save conversations in a TXT
                         file format with the Export Chat feature. Perfect for
                         record-keeping or sharing insights, ensuring your
-                        collaborative discussions are easily accessible and
-                        compatible for various purposes.
+                        discussions are easily accessible and compatible for
+                        various purposes.
                     </p>
                 </div>
                 <Image
