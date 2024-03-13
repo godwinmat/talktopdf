@@ -1,14 +1,25 @@
 import { cn } from "@/lib/utils";
 import { Message } from "@prisma/client";
+import { Volume2, VolumeX } from "lucide-react";
+// @ts-ignore
+import { useSpeechSynthesis } from "react-speech-kit";
+import { Button } from "./ui/button";
 
 interface ChatBubbleProps {
     message: Message;
 }
 
 const ChatBubble = ({ message }: ChatBubbleProps) => {
-    const time = message.createdAt?.toLocaleTimeString([], {
+    const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis();
+    const time = message.createdAt?.toLocaleTimeString("en-US", {
         timeStyle: "short",
+        hour12: true, // Use 12-hour format
     });
+
+    function onSpeak() {
+        speak({ text: message.content, voice: voices[49] });
+    }
+
     return (
         <div
             className={cn(
@@ -21,7 +32,23 @@ const ChatBubble = ({ message }: ChatBubbleProps) => {
             <p className="text-[13px] sm:text-sm whitespace-pre-line">
                 {message.content}
             </p>
-            <p className="text-[10px] pt-1">{time}</p>
+            <div className="flex justify-between items-center">
+                {time && <p className="text-[12px] pt-1">{time}</p>}
+                {message.role !== "user" && supported && (
+                    <Button
+                        variant="ghost"
+                        className="rounded-full"
+                        size="icon"
+                        onClick={speaking ? cancel : onSpeak}
+                    >
+                        {!speaking ? (
+                            <VolumeX className="h-5 w-5" />
+                        ) : (
+                            <Volume2 className="h-5 w-5" />
+                        )}
+                    </Button>
+                )}
+            </div>
         </div>
     );
 };
